@@ -52,10 +52,10 @@ app.use(function(req, res, next) {
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/apply', function(req,res){
+app.get('/', function(req,res){
   res.sendFile(__dirname + '/app/home.html')
 })
-app.get('/', function(req, res) {
+app.get('/home', function(req, res) {
     res.sendFile(__dirname + '/public/home.html')
 
 
