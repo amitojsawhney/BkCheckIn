@@ -1,0 +1,61 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height:100%;
+}
+#bkText {
+    padding-top: 1px;
+    text-align: center;
+    background-color: #FF1772;
+    height:25%;
+    width:100%;
+}
+
+#monday{
+  background-color: #FF8BB2;
+  margin:0;
+  float:left;
+  width:20%;
+  height:75%;
+  text-align: center;
+
+}
+
+#tuesday{
+  background-color: #B68BB2;
+  margin:0;
+  float:left;
+  width:20%;
+  height:75%;
+  text-align: center;
+}
+
+#wednesday{
+  background-color: #878BB2;
+  margin:0;
+  float:left;
+  width:20%;
+  height:75%;
+  text-align: center;
+
+}
+
+#thursday{
+  background-color: #1F8BB2;
+  margin:0;
+  float:left;
+  width:20%;
+  height:75%;
+  text-align: center;
+
+}
+
+#friday{
+  background-color: #06ACB2;
+  margin:0;
+  float:left;
+  width:20%;
+  height:75%;
+  text-align: center;
+
+}
