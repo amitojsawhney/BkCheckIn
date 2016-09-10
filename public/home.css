@@ -8,12 +8,13 @@ background-size: cover;
 font-family: 'Roboto', sans-serif;
 background-image:
   linear-gradient(
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2)
   ),
-  url("villanovaSnow.jpg");
+  url("background.jpg");
 
 }
+
 
 h1{
   color:white;
@@ -54,6 +55,11 @@ h2{
 
 }
 
+#buttons{
+
+  margin-left:33%;
+
+}
 a {
     color: white;
     text-decoration: none;

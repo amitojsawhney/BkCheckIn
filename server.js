@@ -53,6 +53,11 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req,res){
+  res.sendFile(__dirname + '/index.html')
+})
+
+
+app.get('/apply', function(req,res){
   res.sendFile(__dirname + '/app/home.html')
 })
 app.get('/home', function(req, res) {
