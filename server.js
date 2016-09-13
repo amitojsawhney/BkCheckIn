@@ -57,6 +57,11 @@ app.get('/', function(req,res){
 })
 
 
+app.get('/app', function(req,res){
+  res.download(__dirname + '/app.pdf')
+})
+
+
 app.get('/apply', function(req,res){
   res.sendFile(__dirname + '/app/home.html')
 })
