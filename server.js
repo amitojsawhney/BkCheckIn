@@ -58,7 +58,7 @@ app.get('/', function(req,res){
 
 
 app.get('/app', function(req,res){
-  res.download(__dirname + '/BlueKeyApplication.pdf')
+  res.download(__dirname + '/BlueKeyApplication.docx')
 })
 
 
