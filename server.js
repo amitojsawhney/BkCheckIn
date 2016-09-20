@@ -236,6 +236,7 @@ app.post('/attendanceMarked', function(req, res) {
         });
 
     } else
+        console.log(name);
         User.findOneAndUpdate({
             name: req.param('personName')
         }, {

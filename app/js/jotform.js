@@ -2143,9 +2143,10 @@ var JotForm = {
             var count;
 
             var countText = function (firstRun) {
-                if (input.hasClassName('form-custom-hint')) {
+                if (input.value === "" || input.hasClassName('form-custom-hint')) {
+                    $(el.parentNode).removeClassName('form-textarea-limit-indicator-error');
                     el.update("0/" + (minimum > -1 ? minimum : limit));
-                    return;
+                    return JotForm.corrected(el);
                 }
 
                 var contents;
@@ -2197,9 +2198,13 @@ var JotForm = {
             //check whether rich text
             if (input.hasClassName("form-textarea") && input.up('div').down('.nicEdit-main')) {
                 var cEditable = input.up('div').down('.nicEdit-main');
-                cEditable.observe('keyup', function () {
+                var runCount = function() {
                     input.value = cEditable.innerHTML;
                     countText();
+                };
+                cEditable.observe('keyup', runCount);
+                cEditable.observe('blur', function() {
+                    setTimeout(runCount, 0);
                 });
             }
         });
@@ -4138,9 +4143,7 @@ var JotForm = {
             switch (type) {
                 case 'matrix':
                     if ($("id_" + data).down('.form-radio')) {
-                        var rowNum = parseInt(subField.replace("_", "")) + 2;
-                        var row = $("id_" + data).down("tr:nth-child(" + rowNum + ")");
-                        row.select(".form-radio").each(function (radio) {
+                        $$('input[id^="input_'+data+subField+'_"]').each(function (radio) {
                             if (radio.checked) {
                                 val = radio.readAttribute('calcValue') ? radio.readAttribute('calcValue') : radio.value;
                             }
@@ -6927,6 +6930,12 @@ var JotForm = {
                 if (!confirm(JotForm.texts.confirmClearForm)) {
                     return false;
                 } else if (/chrom(e|ium)/.test(navigator.userAgent.toLowerCase()) && $('coupon-button')) {
+                    // #935284 chrome browsers does not clear total price if it has payment coupon
+                    setTimeout(function () {
+                        if ($('payment_total')) {
+                            JotForm.totalCounter(JotForm.prices);
+                        }
+                    }, 40);
                     // #529035 chrome browsers scroll down when pressing clear and if form has coupon field
                     return true;
                 }
@@ -9399,13 +9408,15 @@ var JotForm = {
                         editor.setStyle({'color': '#babbc0'});
                     }
                     editor.observe('blur', function () {
-                        if (!editorInstance.getContent()) {
+                        if (!editorInstance.getContent() || editorInstance.getContent() === "<br>") {
                             editor.setStyle({'color': '#babbc0'});
                             editorInstance.setContent(new_value);
+                            element.writeAttribute("spellcheck", "false").addClassName('form-custom-hint');
                         }
                     });
                     editor.observe('focus', function () {
                         editor.setStyle({'color': ''});
+                        element.removeClassName('form-custom-hint').removeAttribute('spellcheck');
                         if (editorInstance.getContent() === new_value) {
                             editorInstance.setContent('');
                         }
