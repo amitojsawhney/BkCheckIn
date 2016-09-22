@@ -10099,5 +10099,142 @@ function getQuerystring(key, default_) {
     else
         return qs[1];
 }
+
+function onProductImageClicked(index) {
+
+    // hidden element to indicate weather product lightbox is enabled
+    if (!document.getElementById('payment_enable_lightbox')) return;
+
+    var imageUrls;
+
+    if (window.getAllProperties && window.getAllProperties().form_products) {
+        imageUrls = window.getAllProperties().form_products.map(function(p) { return p.icon }).filter(function(p) { return p });
+    } else if (document.querySelectorAll) {
+        imageUrls = Array.prototype.map.call(document.querySelectorAll('span.form-product-item img'), function(p) { return p.src });
+    }
+
+    if (!imageUrls || !imageUrls.length) return;
+
+    var currentIndex = index;
+
+    var currentIcon = imageUrls.splice(currentIndex, 1)[0];
+    imageUrls.splice(0, 0, currentIcon);
+
+    var divOverlay = document.createElement('div');
+    var divOverlayContent = document.createElement('div');
+    var divImgWrapper = document.createElement('div');
+    divOverlay.id = 'productImageOverlay';
+    divOverlay.className = 'overlay';
+    divOverlay.tabIndex = -1;
+    divOverlayContent.className = 'overlay-content';
+    divImgWrapper.className = 'img-wrapper';
+    divOverlay.appendChild(divOverlayContent);
+    divOverlayContent.appendChild(divImgWrapper);
+
+    var prevButton = document.createElement('span');
+    var nextButton = document.createElement('span');
+    var closeButton = document.createElement('span');
+
+    prevButton.innerText = 'prev';
+    nextButton.innerText = 'next';
+    closeButton.innerText = '( X )';
+
+    prevButton.className = 'lb-prev-button';
+    nextButton.className = 'lb-next-button';
+    closeButton.className = 'lb-close-button';
+
+    divOverlayContent.appendChild(prevButton);
+    divOverlayContent.appendChild(nextButton);
+    divOverlayContent.appendChild(closeButton);
+
+    var images = imageUrls.map(function(url) {
+        var img = document.createElement('img');
+        img.style.display = 'none';
+        img.src = url;
+        return img;
+    });
+
+    images[0].style.display = 'block';
+
+    images.forEach(function(p) { divImgWrapper.appendChild(p); });
+
+    var visibleIndex = 0;
+    var imgLength = images.length;
+
+    var displayPrevious = function() {
+        images[visibleIndex].style.display = 'none';
+        visibleIndex = visibleIndex - 1;
+        if (visibleIndex == -1) visibleIndex = imgLength - 1;
+        images[visibleIndex].style.display = 'block';
+        arrangeImageSize();
+    }
+
+    prevButton.onclick = displayPrevious;
+
+    var displayNext = function() {
+        images[visibleIndex].style.display = 'none';
+        visibleIndex = visibleIndex + 1;
+        if (visibleIndex == imgLength) visibleIndex = 0;
+        images[visibleIndex].style.display = 'block';
+        arrangeImageSize();
+    }
+
+    nextButton.onclick = displayNext;
+
+    divOverlayContent.onclick = function(e) {
+        e.stopPropagation();
+    }
+
+    var close = function() {
+        window.onresize = null;
+        divOverlay.remove();
+    }
+
+    closeButton.onclick = close;
+    divOverlay.onclick = close;
+
+    var arrangeImageSize = function() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+
+        var maxSize = (Math.min(width, height) * 0.75) + 'px';
+        var size = width < height ? { maxWidth: maxSize, height: 'auto', width: 'auto', maxHeight: 'none' } : { width: 'auto', maxHeight: maxSize, height: 'auto', maxWidth: 'none' };
+
+        divOverlayContent.style.maxWidth = size.maxWidth;
+        divOverlayContent.style.maxHeight = size.maxHeight;
+        divOverlayContent.style.width = size.width;
+        divOverlayContent.style.height = size.height;
+
+        images[visibleIndex].style.maxHeight = size.maxHeight;
+        images[visibleIndex].style.maxWidth = size.maxWidth;
+        images[visibleIndex].style.width = size.width;
+        images[visibleIndex].style.height = size.height;
+    }
+
+    var resizeCallback = function(e) {
+        arrangeImageSize();
+    }
+
+    window.onresize = resizeCallback;
+
+    divOverlay.onkeydown = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (e.keyCode == 37 || e.keyCode == 38) {
+            displayPrevious();
+        } else if (e.keyCode == 39 || e.keyCode == 40) {
+            displayNext();
+        } else if (e.keyCode == 27) {
+            divOverlay.remove();
+        }
+    }
+    document.body.appendChild(divOverlay);
+    divOverlay.focus();
+    arrangeImageSize();
+}
+
+
+
 // We have to put this event because it's the only way to catch FB load
 window.fbAsyncInit = JotForm.FBInit.bind(JotForm);

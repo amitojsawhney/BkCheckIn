@@ -1484,3 +1484,69 @@ input[type=number]::-webkit-inner-spin-button {
     color: orange !important;
     opacity: 1 !important;
 }
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.5);
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}
+
+.overlay-content {
+  position: absolute;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 3px 5px 0 rgba(0,0,0,.2);
+}
+
+.img-wrapper img { 
+  display: block;
+}
+
+.lb-prev-button, 
+.lb-next-button {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: 50%;
+  margin-top: -35px;
+  color: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s ease;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.lb-prev-button {
+  left: -70px;
+  background-image: url(https://cdn.jotfor.ms/assets/img/v3/lightbox/prev.png);
+}
+.lb-next-button {
+  right: -70px;
+  background-image: url(https://cdn.jotfor.ms/assets/img/v3/lightbox/next.png);
+}
+
+.lb-close-button {
+  display: none;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: -40px;
+  right: -4px;
+  color: transparent;
+  cursor: pointer;
+  background: url(https://cdn.jotfor.ms/assets/img/v3/lightbox/close.png) center center no-repeat;
+}
+
+.overlay-content:hover .lb-prev-button,
+.overlay-content:hover .lb-next-button {
+  opacity: 1;
+}
