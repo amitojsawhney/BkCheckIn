@@ -23,15 +23,24 @@ database.once('open', function() {
 });
 
 function renderStrikes(data, done) {
-  fs.readFile('./public/strikes.html', 'utf8', function (err, layout) {
-    if (err) done(err);
-    done(null, layout
-        .replace('{{{body}}}', data.map(function (usr){
-           return "<div>" + usr.name + "</div>";
-         }).join(" ")));
-  });
+    fs.readFile('./public/strikes.html', 'utf8', function(err, layout) {
+        if (err) done(err);
+        done(null, layout
+            .replace('{{{body}}}', data.map(function(usr) {
+                return "<div>" + usr.name + "</div>";
+            }).join(" ")));
+    });
 };
 
+function renderTourTimes(data, done) {
+    fs.readFile('./public/tourTimes.html', 'utf8', function(err, layout) {
+        if (err) done(err);
+        done(null, layout
+            .replace('{{{body}}}', data.map(function(usr) {
+                return "<div>" + usr.name + "</div>";
+            }).join(" ")));
+    });
+};
 
 
 var client = new twilio.RestClient('AC89a67dfee64487e8b9fb7d422fbf7a3c', '8a6d97fe7463ed3ea18ab1b2a97c21e0');
@@ -52,18 +61,18 @@ app.use(function(req, res, next) {
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req,res){
-  res.sendFile(__dirname + '/index.html')
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/index.html')
 })
 
 
-app.get('/app', function(req,res){
-  res.download(__dirname + '/BlueKeyApplication.docx')
+app.get('/app', function(req, res) {
+    res.download(__dirname + '/BlueKeyApplication.docx')
 })
 
 
-app.get('/apply', function(req,res){
-  res.sendFile(__dirname + '/app/home.html')
+app.get('/apply', function(req, res) {
+    res.sendFile(__dirname + '/app/home.html')
 })
 app.get('/home', function(req, res) {
     res.sendFile(__dirname + '/public/home.html')
@@ -88,12 +97,7 @@ app.get('/upNext', function(req, res) {
 app.get('/attendanceMarked', function(req, res) {
     res.sendFile(__dirname + '/public/attendanceMarked.html')
 
-    User.find({
-        checkedOut: true
-    }, 'name', function(err, User) {
-        if (err) return handleError(err);
-        console.log(User);
-    });
+
 });
 
 app.get('/gaveTour', function(req, res) {
@@ -119,11 +123,176 @@ app.get('/strikes', function(req, res) {
     }, 'name', function(err, users) {
         if (err) return handleError(err);
         renderStrikes(users, function(err, layout) {
-          if (err) return handleError(err);
-          res.send(layout);
+            if (err) return handleError(err);
+            res.send(layout);
         });
     });
 });
+
+app.get('/tourTimes', function(req, res) {
+
+    var d = new Date();
+    var day = d.getDay();
+    var hours = d.getHours();
+
+    if (day = 1 && hours < 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Monday Morning"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            });
+        });
+    }
+    else if (day = 1 && hours >= 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Monday Afternoon"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 2 && hours < 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Tuesday Morning"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 2 && hours >= 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Tuesday Afternoon"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 3 && hours < 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Wednesday Morning"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 3 && hours >= 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Wednesday Afternoon"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 4 && hours < 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Thursday Morning"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 4 && hours >= 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Thursday Afternoon"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 5 && hours < 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Friday Morning"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else if (day = 5 && hours >= 12) {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+            tourTime: "Friday Afternoon"
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                res.send(layout);
+            })
+        })
+    }
+
+    else {
+        User.find({
+            checkedIn: true,
+            checkedOut: false,
+        }, 'name', function(err, users) {
+            if (err) return handleError(err);
+            renderTourTimes(users, function(err, layout) {
+                if (err) return handleError(err);
+                console.log(users)
+                res.send(layout);
+            })
+        })
+    }
+
+
+
+
+
+})
 
 app.post('/register', function(req, res) {
 
@@ -197,13 +366,13 @@ app.post('/upNext', function(req, res) {
         console.log(returnedUser);
         //shove user at top
         for (var i = 0; i < returnedUser.length; i++) {
-        if (returnedUser[i].name === personEntered.name) {
+            if (returnedUser[i].name === personEntered.name) {
 
-            var me = returnedUser[i];
-            returnedUser[i] = returnedUser[0];
-            returnedUser[0] = me;
+                var me = returnedUser[i];
+                returnedUser[i] = returnedUser[0];
+                returnedUser[0] = me;
 
-          }
+            }
         }
 
         //send our array back
@@ -238,18 +407,18 @@ app.post('/attendanceMarked', function(req, res) {
     } else
 
         User.findOneAndUpdate({
-            name: req.param('personName')
-        }, {
-            checkedIn: false,
-            checkedOut: true
-        }, function(err, doc) {
-            if (!doc) {
-                console.log("User does not exist");
-            } else {
-                console.log("User attendance recorded");
-            }
+        name: req.param('personName')
+    }, {
+        checkedIn: false,
+        checkedOut: true
+    }, function(err, doc) {
+        if (!doc) {
+            console.log("User does not exist");
+        } else {
+            console.log("User attendance recorded");
+        }
 
-        });
+    });
 
 
     User.find({
