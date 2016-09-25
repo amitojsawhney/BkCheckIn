@@ -405,10 +405,10 @@ app.post('/attendanceMarked', function(req, res) {
         });
 
     } else
-
+      
         User.findOneAndUpdate({
         name: req.param('personName')
-    }, {
+    } , {
         checkedIn: false,
         checkedOut: true
     }, function(err, doc) {
