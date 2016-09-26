@@ -134,6 +134,8 @@ app.get('/tourTimes', function(req, res) {
     var d = new Date();
     var day = d.getDay();
     var hours = d.getHours();
+    console.log(day);
+    console.log(hours);
 
     if (day = 1 && hours < 12) {
         User.find({
@@ -274,7 +276,7 @@ app.get('/tourTimes', function(req, res) {
         })
     }
 
-    else {
+    else if (day == 0 || day == 6 ){
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -405,7 +407,7 @@ app.post('/attendanceMarked', function(req, res) {
         });
 
     } else
-      
+
         User.findOneAndUpdate({
         name: req.param('personName')
     } , {
