@@ -9,6 +9,11 @@ var config = require('./config');
 var io = require('socket.io');
 var twilio = require('twilio');
 var fs = require('fs');
+var favicon = require('serve-favicon');
+
+
+
+
 
 
 app.use(morgan('dev'));
@@ -286,7 +291,7 @@ app.get('/tourTimes', function(req, res) {
         })
     }
 
-    else{
+    if (day ==0 || day ==6){
         User.find({
             checkedIn: true,
             checkedOut: false,
