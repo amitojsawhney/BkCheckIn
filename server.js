@@ -137,7 +137,7 @@ app.get('/tourTimes', function(req, res) {
     console.log(day);
     console.log(hours);
 
-    if (day = 1 && hours < 12) {
+    if (day == 1 && hours < 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -146,11 +146,12 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Monday Morning");
                 res.send(layout);
             });
         });
     }
-    else if (day = 1 && hours >= 12) {
+    if (day == 1 && hours >= 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -159,12 +160,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Monday Afternoon");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 2 && hours < 12) {
+    if (day == 2 && hours < 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -173,12 +175,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Tuesday Morning");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 2 && hours >= 12) {
+    if (day == 2 && hours >= 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -187,12 +190,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Tuesday Afternoon");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 3 && hours < 12) {
+    if (day == 3 && hours < 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -201,12 +205,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Wednesday Morning");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 3 && hours >= 12) {
+    if (day == 3 && hours >= 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -215,12 +220,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Wednesday Afternoon");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 4 && hours < 12) {
+    if (day == 4 && hours < 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -229,12 +235,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Thursday Morning");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 4 && hours >= 12) {
+    if (day == 4 && hours >= 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -243,12 +250,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Thursday Afternon");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 5 && hours < 12) {
+    if (day == 5 && hours < 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -257,12 +265,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Friday Morning");
                 res.send(layout);
             })
         })
     }
 
-    else if (day = 5 && hours >= 12) {
+    if (day == 5 && hours >= 12) {
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -271,12 +280,13 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
+                console.log("Friday Afternon");
                 res.send(layout);
             })
         })
     }
 
-    else if (day == 0 || day == 6 ){
+    else{
         User.find({
             checkedIn: true,
             checkedOut: false,
@@ -284,7 +294,7 @@ app.get('/tourTimes', function(req, res) {
             if (err) return handleError(err);
             renderTourTimes(users, function(err, layout) {
                 if (err) return handleError(err);
-                console.log(users)
+                console.log("Showing all");
                 res.send(layout);
             })
         })
