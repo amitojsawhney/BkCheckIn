@@ -48,8 +48,8 @@ function renderTourTimes(data, done) {
 };
 
 
-var client = new twilio.RestClient('AC89a67dfee64487e8b9fb7d422fbf7a3c', '8a6d97fe7463ed3ea18ab1b2a97c21e0');
-
+//var client = new twilio.RestClient('AC89a67dfee64487e8b9fb7d422fbf7a3c', '8a6d97fe7463ed3ea18ab1b2a97c21e0');
+const client = require('twilio')('AC89a67dfee64487e8b9fb7d422fbf7a3c', '8a6d97fe7463ed3ea18ab1b2a97c21e0');
 
 app.use(bodyParser.json());
 
@@ -358,7 +358,7 @@ app.post('/upNext', function(req, res) {
         //onsole.log(req.param('personName'));
 
         if (User != null) {
-            client.sms.messages.create({
+            client.messages.create({
                 to: User.phone,
                 from: '8622775083',
                 body: 'Hooray, you are next in the rotation. Please be 15 minutes early to your tour time!'
