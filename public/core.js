@@ -21,7 +21,7 @@ angular.module('bk_checkin', [])
 
         vm.upNext = function() {
 
-            $http.post('http://localhost:8080/upNext', {
+            $http.post('https://novabluekey.herokuapp.com/upNext', {
 
 
                 'personName': vm.libData.name
@@ -53,7 +53,7 @@ angular.module('bk_checkin', [])
 
         vm.attendanceMarked = function() {
 
-            $http.post('http://localhost:8080/attendanceMarked', {
+            $http.post('https://novabluekey.herokuapp.com/attendanceMarked', {
                 'personName': vm.libData.name
 
             }).then(function(response) {
